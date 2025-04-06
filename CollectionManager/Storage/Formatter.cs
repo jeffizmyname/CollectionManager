@@ -20,11 +20,14 @@ namespace CollectionManager.Storage
 
         }
 
-        public static string SerializeCollectionItems(Collection collection)
+        public static string SerializeCollectionItems(Collection collection, string path)
         {
+            StringBuilder sb = new StringBuilder();
             collection.Items.ForEach(item => {
-
+                sb.AppendLine(SerializeCollectionItem(item));
             });
+
+            return sb.ToString();
         }
 
         public static string SerializeCollectionItem(CollectionItem item)
