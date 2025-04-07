@@ -1,25 +1,33 @@
-﻿namespace CollectionManager
+﻿using CollectionManager.CustomControls;
+using CollectionManager.Helpers;
+using CollectionManager.Models;
+using System.Diagnostics;
+using static CollectionManager.Storage.Manager;
+
+namespace CollectionManager
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
 
         public MainPage()
         {
             InitializeComponent();
+            CollectionListPage.newCollectionButtonClicked_Listener += Swap;
+            FormPage.createCollectionButtonClicked_Listener +=
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        async void Swap(object sender, EventArgs e)
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            if(SidePanel.Content != null)
+            {
+                await SidePanel.Content.TranslateTo(SidePanel.Width+100, 0, 500);
+                InfoBarPage.IsVisible = false;
+                FormPage.IsVisible = true;
+                await SidePanel.Content.TranslateTo(0, 0, 500);
+                return;
+            }
         }
+
     }
 
 }

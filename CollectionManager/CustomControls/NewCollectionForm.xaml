@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CollectionManager.CustomControls.NewCollectionForm"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cc="clr-namespace:CollectionManager.CustomControls">
+    <VerticalStackLayout>
+        <Label
+            Margin="25,25,0,0"
+            FontFamily="ObjectivityExtraBold"
+            FontSize="80"
+            HorizontalOptions="Start"
+            Text="New Collection"
+            TextColor="{StaticResource Text}" />
+
+        <Border
+            Margin="10"
+            Background="{StaticResource Background}"
+            StrokeShape="RoundRectangle 20, 20, 20, 20"
+            StrokeThickness="0">
+
+            <VerticalStackLayout VerticalOptions="Center">
+                <Entry
+                    Margin="5,10"
+                    Background="Transparent"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HeightRequest="50"
+                    Placeholder="Name"
+                    x:Name="CollectionNameEntry"
+                    PlaceholderColor="{StaticResource TextOnSecondaryDark}"
+                    TextColor="{StaticResource TextOnSecondary}"
+                    VerticalTextAlignment="Center" />
+
+                <Editor
+                    Margin="5,10"
+                    x:Name="CollectionDescriptionEntry"
+                    Background="Transparent"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HeightRequest="250"
+                    Placeholder="Description"
+                    PlaceholderColor="{StaticResource TextOnSecondaryDark}"
+                    TextColor="{StaticResource TextOnSecondary}" />
+
+            </VerticalStackLayout>
+
+        </Border>
+
+
+        <Button
+            x:Name="CreateCollectionButton"
+            Margin="10"
+            Background="{StaticResource Background}"
+            Clicked="CreateCollectionButton_Clicked"
+            CornerRadius="15"
+            FontFamily="ObjectivityBold"
+            HorizontalOptions="Fill"
+            Text="Create Collection"
+            TextColor="{StaticResource TextOnSecondary}"
+            VerticalOptions="End" />
+    </VerticalStackLayout>
+</ContentView>

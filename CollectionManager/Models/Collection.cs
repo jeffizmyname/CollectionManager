@@ -13,5 +13,15 @@ namespace CollectionManager.Models
         public string Description { get; set; }
 
         public List<CollectionItem> Items { get; set; }
+
+
+        public string ToDisplayString()
+        {
+            return
+            $@"Id: {Id}
+            Name: {Name}
+            Description: {Description}
+            ";
+        }
     }
 }
