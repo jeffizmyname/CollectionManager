@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CollectionManager.CustomControls.CollectionList"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ContentView.Resources>
+        <DataTemplate x:Key="CollectionTemplate">
+            <HorizontalStackLayout Padding="10">
+                <Label
+            FontFamily="ObjectivityExtraBold"
+            FontSize="25"
+            Text="{Binding Name}"
+            TextColor="{StaticResource Text}" />
+            </HorizontalStackLayout>
+        </DataTemplate> 
+    </ContentView.Resources>
+    
+    <Grid RowDefinitions="auto,*">
+        <!--  https://www.realtimecolors.com/?colors=fddbe4-0d0105-f7799b-099355-1169f0&fonts=Inter-Inter  -->
+
+        <Border
+            Grid.Row="0"
+            Margin="15,0,10,10"
+            Padding="20"
+            Background="{StaticResource Primary}"
+            StrokeShape="RoundRectangle 0, 0, 20, 20"
+            StrokeThickness="0">
+
+            <Label
+                x:Name="TitleLabel"
+                FontAttributes="Bold"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="60"
+                HorizontalOptions="Center"
+                Text="Your Collections"
+                TextColor="{StaticResource Text}" />
+
+        </Border>
+
+
+        <Border
+            Grid.Row="1"
+            Margin="0,10,10,15"
+            Background="{StaticResource Tertiary}"
+            StrokeShape="RoundRectangle 0, 20, 0, 20"
+            StrokeThickness="0">
+            <Grid RowDefinitions="*, auto">
+
+                <CollectionView
+                x:Name="CollectionListView"
+                    Grid.Row="0"
+                Margin="5"
+                ItemsSource="{Binding Collections}"
+                ItemTemplate="{StaticResource CollectionTemplate}"
+                SelectionMode="Single"
+                SelectionChanged="CollectionListView_SelectionChanged"/>
+
+                <Button
+                    Grid.Row="1"
+                    Margin="10"
+                    FontFamily="ObjectivityBold"
+                    TextColor="{StaticResource TextOnTeritiary}"
+                    HorizontalOptions="End"
+                    CornerRadius="15"
+                    Background="{StaticResource Background}"
+                    x:Name="NewCollectionButton"
+                    Clicked="NewCollectionButton_Clicked"
+                    Text="New Collection"/>
+
+            </Grid>
+        </Border>
+
+
+    </Grid>
+</ContentView>
