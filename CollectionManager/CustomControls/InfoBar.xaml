@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CollectionManager.CustomControls.InfoBar"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <VerticalStackLayout>
+        <Label
+                Text="Information"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="80"
+                Margin="25, 25, 0, 0"
+                HorizontalOptions="Start"
+                TextColor="{StaticResource Text}"/>
+
+        <Label
+                Text="Collections: 1"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="50"
+                Margin="25, 25, 0, 0"
+                HorizontalOptions="Start"
+                TextColor="{StaticResource Text}"/>
+
+        <Label
+                Text="All Items: 1"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="50"
+                Margin="25, 25, 0, 0"
+                HorizontalOptions="Start"
+                TextColor="{StaticResource Text}"/>
+    </VerticalStackLayout>
+</ContentView>
