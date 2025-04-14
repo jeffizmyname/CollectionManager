@@ -2,23 +2,70 @@
 <ContentView
     x:Class="CollectionManager.CustomControls.CollectionList"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <ContentView.Resources>
         <DataTemplate x:Key="CollectionTemplate">
             <HorizontalStackLayout Padding="10">
                 <Label
-            FontFamily="ObjectivityExtraBold"
-            FontSize="25"
-            Text="{Binding Name}"
-            TextColor="{StaticResource Text}" />
+                    FontFamily="ObjectivityExtraBold"
+                    FontSize="25"
+                    Text="{Binding Name}"
+                    TextColor="{StaticResource Text}" />
             </HorizontalStackLayout>
-        </DataTemplate> 
+        </DataTemplate>
+
+        <DataTemplate x:Key="CollectionItemTemplate">
+            <Grid>
+                <Border
+                    Background="#aa404040"
+                    HeightRequest="280"
+                    IsVisible="{Binding Sold}"
+                    StrokeShape="RoundRectangle 20"
+                    StrokeThickness="0"
+                    WidthRequest="300"
+                    ZIndex="10" />
+                <Border
+                    Margin="1"
+                    Background="{StaticResource OnTeritiary}"
+                    HeightRequest="280"
+                    StrokeShape="RoundRectangle 20"
+                    StrokeThickness="0"
+                    WidthRequest="300"
+                    ZIndex="0">
+                    <VerticalStackLayout>
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="200"
+                            Source="{Binding ImagePath}"
+                            WidthRequest="300" />
+                        <VerticalStackLayout Margin="15,15,0,5">
+                            <Label
+                                FontFamily="ObjectivityExtraBold"
+                                FontSize="25"
+                                Text="{Binding Name}"
+                                TextColor="{StaticResource Text}" />
+                            <Label
+                                FontFamily="ObjectivityExtraBold"
+                                FontSize="25"
+                                Text="{Binding RatingString}"
+                                TextColor="{StaticResource Text}" />
+
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+        </DataTemplate>
+
     </ContentView.Resources>
-    
+
     <Grid RowDefinitions="auto,*">
         <!--  https://www.realtimecolors.com/?colors=fddbe4-0d0105-f7799b-099355-1169f0&fonts=Inter-Inter  -->
 
+        <!--  Title  -->
         <Border
             Grid.Row="0"
             Margin="15,0,10,10"
@@ -27,18 +74,39 @@
             StrokeShape="RoundRectangle 0, 0, 20, 20"
             StrokeThickness="0">
 
-            <Label
-                x:Name="TitleLabel"
-                FontAttributes="Bold"
-                FontFamily="ObjectivityExtraBold"
-                FontSize="60"
-                HorizontalOptions="Center"
-                Text="Your Collections"
-                TextColor="{StaticResource Text}" />
+            <Grid>
+
+                <Image
+                    x:Name="BackButton"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    IsVisible="Hidden"
+                    Source="arrow_back.png"
+                    WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BackButton_Tapped" />
+                    </Image.GestureRecognizers>
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{StaticResource Text}" />
+                    </Image.Behaviors>
+                </Image>
+
+
+                <Label
+                    x:Name="TitleLabel"
+                    FontAttributes="Bold"
+                    FontFamily="ObjectivityExtraBold"
+                    FontSize="60"
+                    HorizontalOptions="Center"
+                    Text="Your Collections"
+                    TextColor="{StaticResource Text}" />
+
+            </Grid>
+
 
         </Border>
 
-
+        <!--  Collection List/Item List  -->
         <Border
             Grid.Row="1"
             Margin="0,10,10,15"
@@ -48,25 +116,44 @@
             <Grid RowDefinitions="*, auto">
 
                 <CollectionView
-                x:Name="CollectionListView"
+                    x:Name="CollectionListView"
                     Grid.Row="0"
-                Margin="5"
-                ItemsSource="{Binding Collections}"
-                ItemTemplate="{StaticResource CollectionTemplate}"
-                SelectionMode="Single"
-                SelectionChanged="CollectionListView_SelectionChanged"/>
+                    Margin="5"
+                    IsVisible="True"
+                    ItemTemplate="{StaticResource CollectionTemplate}"
+                    ItemsLayout="VerticalList"
+                    ItemsSource="{Binding Collections}"
+                    SelectionChanged="CollectionListView_SelectionChanged"
+                    SelectionMode="Single" />
+
+                <CollectionView
+                    x:Name="CollectionItemsListView"
+                    Grid.Row="0"
+                    Margin="5"
+                    IsVisible="False"
+                    ItemTemplate="{StaticResource CollectionItemTemplate}"
+                    ItemsSource="{Binding Items}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="10"
+                            Orientation="Vertical"
+                            Span="4"
+                            VerticalItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
 
                 <Button
+                    x:Name="AddNewButton"
                     Grid.Row="1"
                     Margin="10"
-                    FontFamily="ObjectivityBold"
-                    TextColor="{StaticResource TextOnTeritiary}"
-                    HorizontalOptions="End"
-                    CornerRadius="15"
                     Background="{StaticResource Background}"
-                    x:Name="NewCollectionButton"
-                    Clicked="NewCollectionButton_Clicked"
-                    Text="New Collection"/>
+                    Clicked="AddNewButton_Clicked"
+                    CornerRadius="15"
+                    FontFamily="ObjectivityBold"
+                    HorizontalOptions="End"
+                    Text="New Collection"
+                    TextColor="{StaticResource TextOnTeritiary}" />
 
             </Grid>
         </Border>
