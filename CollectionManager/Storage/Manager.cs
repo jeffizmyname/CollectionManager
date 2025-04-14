@@ -39,6 +39,10 @@ namespace CollectionManager.Storage
 
         public static List<CollectionItem> LoadItems(string collectionName)
         {
+            if (!File.Exists(Path.Combine(StoragePath, collectionName + ".txt")))
+            {
+                File.WriteAllTextAsync(Path.Combine(StoragePath, collectionName + ".txt"), "");
+            }
             using (StreamReader sr = new StreamReader(Path.Combine(StoragePath, collectionName + ".txt")))
             {
                 string data = String.Empty;
