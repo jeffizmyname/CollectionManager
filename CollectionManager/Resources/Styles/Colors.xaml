@@ -18,6 +18,10 @@
     <Color x:Key="TextOnSecondary">#c0e3d4</Color>
     <Color x:Key="TextOnTeritiary">#c6dbfb</Color>
 
+    <Color x:Key="OnPrimary">#950931</Color>
+    <Color x:Key="OnSecondary">#316d53</Color>
+    <Color x:Key="OnTeritiary">#094195</Color>
+
     <Color x:Key="TextOnPrimaryDark">#8a5a66</Color>
     <Color x:Key="TextOnSecondaryDark">#4b6c5f</Color>
     <Color x:Key="TextOnTeritiaryDark">#4a6285</Color>
