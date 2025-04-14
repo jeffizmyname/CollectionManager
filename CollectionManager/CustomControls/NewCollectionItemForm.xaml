@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CollectionManager.CustomControls.NewCollectionItemForm"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <VerticalStackLayout>
+        <Label
+            Margin="25,25,0,0"
+            FontFamily="ObjectivityExtraBold"
+            FontSize="80"
+            HorizontalOptions="Start"
+            Text="New Item"
+            TextColor="{StaticResource Text}" />
+
+        <Border
+            Margin="10"
+            Padding="0,0,0,10"
+            Background="{StaticResource Background}"
+            StrokeShape="RoundRectangle 20, 20, 20, 20"
+            StrokeThickness="0">
+
+            <VerticalStackLayout VerticalOptions="Center">
+                <Entry
+                    x:Name="ItemNameEntry"
+                    Margin="5,10"
+                    Background="Transparent"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HeightRequest="50"
+                    Placeholder="Name"
+                    PlaceholderColor="{StaticResource TextOnSecondaryDark}"
+                    TextColor="{StaticResource TextOnSecondary}"
+                    VerticalTextAlignment="Center" />
+
+                <Editor
+                    x:Name="ItemDescriptionEntry"
+                    Margin="5,10"
+                    Background="Transparent"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HeightRequest="250"
+                    Placeholder="Description"
+                    PlaceholderColor="{StaticResource TextOnSecondaryDark}"
+                    TextColor="{StaticResource TextOnSecondary}" />
+
+                <Entry
+                    x:Name="ItemPriceEntry"
+                    Margin="5,10"
+                    Background="Transparent"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HeightRequest="50"
+                    Keyboard="Numeric"
+                    Placeholder="Price"
+                    PlaceholderColor="{StaticResource TextOnSecondaryDark}"
+                    TextColor="{StaticResource TextOnSecondary}"
+                    VerticalTextAlignment="Center" />
+
+                <HorizontalStackLayout Margin="15,0,0,0" Spacing="10">
+
+                    <Label
+                        FontFamily="ObjectivityRegular"
+                        FontSize="25"
+                        Text="Collection Date"
+                        TextColor="{StaticResource TextOnSecondaryDark}"
+                        VerticalOptions="Center" />
+
+                    <DatePicker x:Name="CollectionDatePicker" TextColor="{StaticResource TextOnSecondaryDark}" />
+
+                </HorizontalStackLayout>
+
+
+                <HorizontalStackLayout>
+                    <Entry
+                        x:Name="ItemRatingEntry"
+                        Margin="5,10"
+                        Background="Transparent"
+                        FontAttributes="Bold"
+                        FontSize="25"
+                        HeightRequest="50"
+                        Keyboard="Numeric"
+                        MaximumWidthRequest="100"
+                        Placeholder="Rating"
+                        PlaceholderColor="{StaticResource TextOnSecondaryDark}"
+                        TextColor="{StaticResource TextOnSecondary}"
+                        VerticalTextAlignment="Center"
+                        WidthRequest="100" />
+
+                    <Label
+                        FontFamily="ObjectivityRegular"
+                        FontSize="25"
+                        Text="/ 10"
+                        TextColor="{StaticResource TextOnSecondaryDark}"
+                        VerticalOptions="Center" />
+
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="10,0,0,0" Spacing="5">
+                    <CheckBox x:Name="ForSaleCheckBox">
+                        <CheckBox.Triggers>
+                            <DataTrigger
+                                Binding="{Binding Source={x:Reference ForSaleCheckBox}, Path=IsChecked}"
+                                TargetType="CheckBox"
+                                Value="True">
+                                <Setter Property="Color" Value="{StaticResource TextOnSecondary}" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding Source={x:Reference ForSaleCheckBox}, Path=IsChecked}"
+                                TargetType="CheckBox"
+                                Value="False">
+                                <Setter Property="Color" Value="{StaticResource TextOnSecondaryDark}" />
+                            </DataTrigger>
+                        </CheckBox.Triggers>
+                    </CheckBox>
+                    <Label
+                        FontFamily="ObjectivityRegular"
+                        FontSize="25"
+                        Text="For Sale"
+                        TextColor="{StaticResource TextOnSecondaryDark}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+
+                <HorizontalStackLayout Margin="15,0,0,0" Spacing="5">
+                    <CheckBox x:Name="SoldCheckBox">
+                        <CheckBox.Triggers>
+                            <DataTrigger
+                                Binding="{Binding Source={x:Reference SoldCheckBox}, Path=IsChecked}"
+                                TargetType="CheckBox"
+                                Value="True">
+                                <Setter Property="Color" Value="{StaticResource TextOnSecondary}" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding Source={x:Reference SoldCheckBox}, Path=IsChecked}"
+                                TargetType="CheckBox"
+                                Value="False">
+                                <Setter Property="Color" Value="{StaticResource TextOnSecondaryDark}" />
+                            </DataTrigger>
+                        </CheckBox.Triggers>
+                    </CheckBox>
+                    <Label
+                        FontFamily="ObjectivityRegular"
+                        FontSize="25"
+                        Text="Is Sold"
+                        TextColor="{StaticResource TextOnSecondaryDark}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="15,0,0,0" Spacing="10">
+
+                    <Label
+                        FontFamily="ObjectivityRegular"
+                        FontSize="25"
+                        Text="Sell Date"
+                        TextColor="{StaticResource TextOnSecondaryDark}"
+                        VerticalOptions="Center" />
+
+                    <DatePicker x:Name="SoldDatePicker" TextColor="{StaticResource TextOnSecondaryDark}" />
+
+                </HorizontalStackLayout>
+
+                <Label
+                    Margin="15,5"
+                    FontFamily="ObjectivityBold"
+                    FontSize="25"
+                    Text="Custom Variable"
+                    TextColor="{StaticResource TextOnSecondaryDark}"
+                    VerticalOptions="Center" />
+
+                <HorizontalStackLayout>
+                    <Label
+                        Margin="15,5"
+                        FontFamily="ObjectivityBold"
+                        FontSize="25"
+                        Text="Type:"
+                        TextColor="{StaticResource TextOnSecondaryDark}"
+                        VerticalOptions="Center" />
+
+                    <Picker x:Name="TypePicker" TextColor="{StaticResource TextOnSecondaryDark}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>String</x:String>
+                                <x:String>Int</x:String>
+                                <x:String>Custom List</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                </HorizontalStackLayout>
+
+
+                <Label
+                    Margin="15,5"
+                    FontFamily="ObjectivityBold"
+                    FontSize="25"
+                    Text="Name"
+                    TextColor="{StaticResource TextOnSecondaryDark}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Margin="15,5"
+                    FontFamily="ObjectivityBold"
+                    FontSize="25"
+                    Text="Value"
+                    TextColor="{StaticResource TextOnSecondaryDark}"
+                    VerticalOptions="Center" />
+
+            </VerticalStackLayout>
+
+        </Border>
+
+
+        <Button
+            x:Name="CreateCollectionButton"
+            Margin="10"
+            Background="{StaticResource Background}"
+            CornerRadius="15"
+            FontFamily="ObjectivityBold"
+            HorizontalOptions="Fill"
+            Text="Create Collection"
+            TextColor="{StaticResource TextOnSecondary}"
+            VerticalOptions="End" />
+    </VerticalStackLayout>
+</ContentView>
