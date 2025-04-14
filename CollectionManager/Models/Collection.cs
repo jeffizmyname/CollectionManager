@@ -14,6 +14,16 @@ namespace CollectionManager.Models
 
         public List<CollectionItem> Items { get; set; }
 
+        public Collection() { }
+
+        public Collection(string name, string description)
+        {
+            Id = 0;
+            Name = name;
+            Description = description;
+            Items = new List<CollectionItem>();
+        }
+
 
         public string ToDisplayString()
         {

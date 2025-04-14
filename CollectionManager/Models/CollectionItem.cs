@@ -23,6 +23,10 @@ namespace CollectionManager.Models
 
         public CustomVariable customVariable { get; set; }
 
+        public string ImagePath => System.IO.Path.Combine(FileSystem.AppDataDirectory, "data", "Images" ,ImageName);
+        public string RatingString => $"{Rating}/10";
+
+
         public string ToDisplayString()
         {
             return
