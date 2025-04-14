@@ -1,6 +1,8 @@
 ﻿using CollectionManager.CustomControls;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
 
 namespace CollectionManager
 {
@@ -11,6 +13,8 @@ namespace CollectionManager
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitCore()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
