@@ -13,5 +13,12 @@ namespace CollectionManager.ViewModels
         {
             Collections = new ObservableCollection<Collection>(LoadCollections());
         }
+
+        public void AddCollection(Collection collection)
+        {
+            Collections.Add(collection);
+            SaveCollection(collection);
+        }
+
     }
 }
