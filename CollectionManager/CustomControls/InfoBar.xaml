@@ -4,28 +4,58 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <VerticalStackLayout>
-        <Label
-                Text="Information"
+        
+        <VerticalStackLayout x:Name="CollectionsInfo">
+            <Label
+                Margin="25,25,0,0"
                 FontFamily="ObjectivityExtraBold"
                 FontSize="80"
-                Margin="25, 25, 0, 0"
                 HorizontalOptions="Start"
-                TextColor="{StaticResource Text}"/>
+                Text="Information"
+                TextColor="{StaticResource Text}" />
 
-        <Label
+            <Label
+                Margin="25,25,0,0"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="50"
+                HorizontalOptions="Start"
                 Text="Collections: 1"
-                FontFamily="ObjectivityExtraBold"
-                FontSize="50"
-                Margin="25, 25, 0, 0"
-                HorizontalOptions="Start"
-                TextColor="{StaticResource Text}"/>
+                TextColor="{StaticResource Text}" />
 
-        <Label
-                Text="All Items: 1"
+            <Label
+                Margin="25,25,0,0"
                 FontFamily="ObjectivityExtraBold"
                 FontSize="50"
-                Margin="25, 25, 0, 0"
                 HorizontalOptions="Start"
-                TextColor="{StaticResource Text}"/>
+                Text="All Items: 1"
+                TextColor="{StaticResource Text}" />
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout x:Name="CollectionInfo" IsVisible="Hidden">
+            <Label
+                Margin="25,25,0,0"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="80"
+                HorizontalOptions="Start"
+                Text="Information"
+                TextColor="{StaticResource Text}" />
+
+            <Label
+                Margin="25,25,0,0"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="50"
+                HorizontalOptions="Start"
+                Text="Items: 1"
+                TextColor="{StaticResource Text}" />
+
+            <Label
+                Margin="25,25,0,0"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="50"
+                HorizontalOptions="Start"
+                Text="idk: 1"
+                TextColor="{StaticResource Text}" />
+        </VerticalStackLayout>
+
     </VerticalStackLayout>
 </ContentView>
