@@ -16,7 +16,8 @@
                 StrokeThickness="0">
                 <VerticalStackLayout>
                     <cc:InfoBar x:Name="InfoBarPage"/>
-                    <cc:NewCollectionForm x:Name="FormPage" IsVisible="Hidden"/>
+                    <cc:NewCollectionForm x:Name="FormCollectionPage" IsVisible="Hidden"/>
+                    <cc:NewCollectionItemForm x:Name="FormItemPage" IsVisible="Hidden"/>
                 </VerticalStackLayout>
             </Border>
 
