@@ -33,6 +33,14 @@ namespace CollectionManager.Helpers
             return "Empty Choice";
         }
 
+        public string GetValue()
+        {
+            if (StringValue != null) return StringValue;
+            if (IntValue != null) return IntValue.ToString();
+            if (EnumValues != null) return string.Join(",", EnumValues);
+            return "Empty Choice";
+        }
+
 
         public static CustomVariable Parse(string input)
         {
