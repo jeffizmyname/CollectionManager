@@ -1,4 +1,5 @@
 ﻿using CollectionManager.Models;
+using CollectionManager.Storage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +25,37 @@ namespace CollectionManager.ViewModels
             foreach (var item in LoadItems(collectionName))
             {
                 Items.Add(item);
+            }
+            PutSoldAtEnd();
+        }
+
+        public void AddItem(CollectionItem item)
+        {
+            item.Id = Manager.GetMaxItemId(item.CollectionName) + 1;
+            Items.Add(item);
+            SaveItem(item);
+            PutSoldAtEnd();
+        }
+
+        public void EditItem(CollectionItem item)
+        {
+            var index = Items.ToList().FindIndex(i => i.Id == item.Id);
+            if (index != -1)
+            {
+                Items.RemoveAt(index);
+                Items.Insert(index, item);
+                Manager.UpdateItems(Items.ToList(), CurrentCollectionName);
+            }
+            PutSoldAtEnd();
+        }
+
+        public void RemoveItem(CollectionItem item)
+        {
+            var index = Items.ToList().FindIndex(i => i.Id == item.Id);
+            if (index != -1)
+            {
+                Items.RemoveAt(index);
+                Manager.UpdateItems(Items.ToList(), CurrentCollectionName);
             }
             PutSoldAtEnd();
         }
