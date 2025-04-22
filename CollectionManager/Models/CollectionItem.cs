@@ -25,6 +25,13 @@ namespace CollectionManager.Models
 
         public string ImagePath => System.IO.Path.Combine(FileSystem.AppDataDirectory, "data", "Images" ,ImageName);
         public string RatingString => $"{Rating}/10";
+        public string CollectionDateString => $"{CollectionDate.Day}/{CollectionDate.Month}/{CollectionDate.Year}";
+        public string SellDateString => SellDate.HasValue
+           ? $"{SellDate.Value.Day}/{SellDate.Value.Month}/{SellDate.Value.Year}"
+           : "Not Sold";
+
+        public string SoldString => Sold ? "Yes" : "No";
+        public string ToSaleString => ToSale ? "Yes" : "No";
 
 
         public string ToDisplayString()
@@ -34,14 +41,29 @@ namespace CollectionManager.Models
     Collection: {CollectionName}
     Name: {Name}
     Description: {Description}
-    Price: {Price} USD
+    Price: {Price} PLN
     Collected On: {CollectionDate:G}
     Sold On: {(SellDate.HasValue ? SellDate.Value.ToString("G") : "Not Sold")}
-    Rating: {Rating}/5
+    Rating: {Rating}/10
     Sold: {(Sold ? "Yes" : "No")}
     To Sale: {(ToSale ? "Yes" : "No")}
     Image: {ImageName}
     Custom Variable: {customVariable.ToString()}";
+        }
+
+        private static bool IsDuplicate(CollectionItem a, CollectionItem b)
+        {
+            return a.CollectionName == b.CollectionName &&
+                   a.Name == b.Name &&
+                   a.Description == b.Description &&
+                   a.Price == b.Price &&
+                   a.customVariable.Name == b.customVariable.Name &&
+                   a.customVariable.GetValue() == b.customVariable.GetValue();
+        }
+
+        public static bool HasDuplicate(List<CollectionItem> list, CollectionItem item)
+        {
+            return list.Any(existing => IsDuplicate(existing, item) && !existing.Sold);
         }
     }
 }
