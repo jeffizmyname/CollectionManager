@@ -18,6 +18,7 @@
                     <cc:InfoBar x:Name="InfoBarPage"/>
                     <cc:NewCollectionForm x:Name="FormCollectionPage" IsVisible="Hidden"/>
                     <cc:NewCollectionItemForm x:Name="FormItemPage" IsVisible="Hidden"/>
+                    <cc:NewSetForm x:Name="FormSetPage" IsVisible="Hidden"/>
                 </VerticalStackLayout>
             </Border>
 
