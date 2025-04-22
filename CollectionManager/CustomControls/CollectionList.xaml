@@ -60,6 +60,126 @@
 
         </DataTemplate>
 
+        <DataTemplate x:Key="ItemPageTemplate">
+            <Grid Margin="10" ColumnDefinitions="*,*">
+
+                <VerticalStackLayout Grid.Column="0">
+                    <Border StrokeShape="RoundRectangle 15, 15, 15, 15" StrokeThickness="0">
+                        <Image Aspect="AspectFill" Source="{Binding ImagePath}" />
+                    </Border>
+
+                    <VerticalStackLayout Margin="20">
+                        <Label
+                            Margin="0,0,0,10"
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="50"
+                            Text="{Binding Name}"
+                            TextColor="{StaticResource Text}" />
+
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="30"
+                            Text="{Binding Description}"
+                            TextColor="{StaticResource Text}" />
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    Margin="10"
+                    Spacing="30">
+
+                    <!--  Rating  -->
+                    <HorizontalStackLayout>
+                        <Label
+                            FontFamily="ObjectivityBold"
+                            FontSize="30"
+                            Text="Rating: "
+                            TextColor="{StaticResource Text}" />
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="30"
+                            Text="{Binding RatingString}"
+                            TextColor="{StaticResource Text}" />
+                    </HorizontalStackLayout>
+
+                    <!--  Price  -->
+                    <HorizontalStackLayout>
+                        <Label
+                            FontFamily="ObjectivityBold"
+                            FontSize="30"
+                            Text="Price: "
+                            TextColor="{StaticResource Text}" />
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="30"
+                            Text="{Binding Price}"
+                            TextColor="{StaticResource Text}" />
+                    </HorizontalStackLayout>
+
+                    <!--  Collection Date  -->
+                    <HorizontalStackLayout>
+                        <Label
+                            FontFamily="ObjectivityBold"
+                            FontSize="30"
+                            Text="Collection Date: "
+                            TextColor="{StaticResource Text}" />
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="30"
+                            Text="{Binding CollectionDateString}"
+                            TextColor="{StaticResource Text}" />
+                    </HorizontalStackLayout>
+
+                    <!--  Sell Date  -->
+                    <HorizontalStackLayout IsVisible="{Binding Sold}">
+                        <Label
+                            FontFamily="ObjectivityBold"
+                            FontSize="30"
+                            Text="Sell Date: "
+                            TextColor="{StaticResource Text}" />
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="30"
+                            Text="{Binding SellDateString}"
+                            TextColor="{StaticResource Text}" />
+                    </HorizontalStackLayout>
+
+                    <!--  For Sale  -->
+                    <HorizontalStackLayout>
+                        <Label
+                            FontFamily="ObjectivityBold"
+                            FontSize="30"
+                            Text="For Sale: "
+                            TextColor="{StaticResource Text}" />
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="30"
+                            Text="{Binding ToSaleString}"
+                            TextColor="{StaticResource Text}" />
+                    </HorizontalStackLayout>
+
+                    <!--  Sold  -->
+                    <HorizontalStackLayout IsVisible="{Binding ToSale}">
+                        <Label
+                            FontFamily="ObjectivityBold"
+                            FontSize="30"
+                            Text="Sold: "
+                            TextColor="{StaticResource Text}" />
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="30"
+                            Text="{Binding SoldString}"
+                            TextColor="{StaticResource Text}" />
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+
+
+            </Grid>
+        </DataTemplate>
+
     </ContentView.Resources>
 
     <Grid RowDefinitions="auto,*">
@@ -115,6 +235,8 @@
             StrokeThickness="0">
             <Grid RowDefinitions="*, auto">
 
+
+                <!--  Collctions  -->
                 <CollectionView
                     x:Name="CollectionListView"
                     Grid.Row="0"
@@ -126,6 +248,7 @@
                     SelectionChanged="CollectionListView_SelectionChanged"
                     SelectionMode="Single" />
 
+                <!--  Items  -->
                 <CollectionView
                     x:Name="CollectionItemsListView"
                     Grid.Row="0"
@@ -133,6 +256,7 @@
                     IsVisible="False"
                     ItemTemplate="{StaticResource CollectionItemTemplate}"
                     ItemsSource="{Binding Items}"
+                    SelectionChanged="CollectionItemsListView_SelectionChanged"
                     SelectionMode="Single">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
@@ -143,21 +267,54 @@
                     </CollectionView.ItemsLayout>
                 </CollectionView>
 
-                <Button
-                    x:Name="AddNewButton"
-                    Grid.Row="1"
-                    Margin="10"
-                    Background="{StaticResource Background}"
-                    Clicked="AddNewButton_Clicked"
-                    CornerRadius="15"
-                    FontFamily="ObjectivityBold"
-                    HorizontalOptions="End"
-                    Text="New Collection"
-                    TextColor="{StaticResource TextOnTeritiary}" />
+                <!--  Item  -->
+                <ContentView
+                    x:Name="ItemDetailsPage"
+                    Grid.Row="0"
+                    IsVisible="False" />
+
+                <HorizontalStackLayout Grid.Row="1" HorizontalOptions="End">
+                    <!--  Action  Button  -->
+                    <Button
+                        x:Name="ExportButton"
+                        Margin="5, 10"
+                        Clicked="ExportButton_Clicked"
+                        Background="{StaticResource Background}"
+                        CornerRadius="15"
+                        FontFamily="ObjectivityBold"
+                        HorizontalOptions="End"
+                        Text="Export Items"
+                        IsVisible="False"
+                        TextColor="{StaticResource TextOnTeritiary}" />
+
+                    <!--  Action  Button  -->
+                    <Button
+                        x:Name="ImportButton"
+                        Margin="5, 10"
+                        Clicked="ImportButton_Clicked"
+                        Background="{StaticResource Background}"
+                        CornerRadius="15"
+                        FontFamily="ObjectivityBold"
+                        HorizontalOptions="End"
+                        Text="Import Items"
+                        IsVisible="False"
+                        TextColor="{StaticResource TextOnTeritiary}" />
+
+                    <!--  Action  Button  -->
+                    <Button
+                        x:Name="AddNewButton"
+                        Margin="5, 10, 10, 10"
+                        Background="{StaticResource Background}"
+                        Clicked="AddNewButton_Clicked"
+                        CornerRadius="15"
+                        FontFamily="ObjectivityBold"
+                        HorizontalOptions="End"
+                        Text="New Collection"
+                        IsVisible="True"
+                        TextColor="{StaticResource TextOnTeritiary}" />
+                </HorizontalStackLayout>
 
             </Grid>
         </Border>
-
-
     </Grid>
 </ContentView>
