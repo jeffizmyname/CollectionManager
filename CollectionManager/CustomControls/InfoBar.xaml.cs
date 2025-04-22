@@ -13,6 +13,7 @@ public partial class InfoBar : ContentView
         {
             CollectionsInfo.IsVisible = true;
             CollectionInfo.IsVisible = false;
+
         }
         else if (page == "CollectionItemList")
         {
@@ -20,4 +21,17 @@ public partial class InfoBar : ContentView
             CollectionInfo.IsVisible = true;
         }
     }
-}
+
+    public void UpdateCollectionInfo(int collectionCount, int allItemCount)
+    {
+        CollectionCountLabel.Text = $"Collections: {collectionCount}";
+        AllItemsCountLabel.Text = $"All Items: {allItemCount}";
+    }
+
+    public void UpdateItemsInfo(int ItemCount, int SoldItems, int ForSale)
+    {
+        ItemCountLabel.Text = $"Items: {ItemCount}";
+        SoldItemsCountLabel.Text = $"Sold Items: {SoldItems}";
+        ForSaleItemsLabel.Text = $"For Sale: {ForSale}";
+    }
+} 
