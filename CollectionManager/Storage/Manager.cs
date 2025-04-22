@@ -45,13 +45,13 @@ namespace CollectionManager.Storage
             }
         }
 
-        //public static string SaveItems(List<CollectionItem> items)
-        //{
-        //    using (StreamWriter sw = new StreamWriter(Path.Combine(StoragePath, item.CollectionName + ".txt"), true))
-        //    {
-        //        sw.Write(Formatter.SerializeCollectionItems(items));
-        //    }
-        //}
+        public static void UpdateItems(List<CollectionItem> items, string collectionName)
+        {
+            using (StreamWriter sw = new StreamWriter(Path.Combine(StoragePath, collectionName + ".txt"), false))
+            {
+                sw.Write(SerializeCollectionItems(items, collectionName));
+            }
+        }
 
         public static List<CollectionItem> LoadItems(string collectionName)
         {
