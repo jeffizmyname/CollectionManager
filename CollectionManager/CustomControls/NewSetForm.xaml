@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="CollectionManager.CustomControls.NewSetForm"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <VerticalStackLayout>
+        <Label
+            Margin="25,25,0,0"
+            FontFamily="ObjectivityExtraBold"
+            FontSize="80"
+            HorizontalOptions="Start"
+            Text="New values set"
+            TextColor="{StaticResource Text}" />
+
+        <Border
+            Margin="10"
+            Padding="0"
+            Background="{StaticResource Background}"
+            StrokeShape="RoundRectangle 20, 20, 20, 20"
+            StrokeThickness="0">
+
+            <VerticalStackLayout VerticalOptions="Center">
+                <Entry
+                    x:Name="SetNameEntry"
+                    Margin="5,10"
+                    Background="Transparent"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HeightRequest="50"
+                    Placeholder="Name"
+                    PlaceholderColor="{StaticResource TextOnSecondaryDark}"
+                    TextColor="{StaticResource TextOnSecondary}"
+                    VerticalTextAlignment="Center" />
+
+                <Entry
+                    x:Name="SetValueEntry"
+                    Margin="5,10"
+                    Background="Transparent"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    HeightRequest="50"
+                    Placeholder="Option name"
+                    PlaceholderColor="{StaticResource TextOnSecondaryDark}"
+                    TextColor="{StaticResource TextOnSecondary}" />
+
+                <Button
+                    x:Name="AddOptionButton"
+                    Margin="10"
+                    Background="{StaticResource Secondary}"
+                    Clicked="OnAddOptionButton_Clicked"
+                    CornerRadius="15"
+                    FontFamily="ObjectivityBold"
+                    HorizontalOptions="Fill"
+                    Text="Add Option"
+                    TextColor="{StaticResource TextOnSecondary}" />
+
+                <CollectionView
+                    x:Name="OptionsCollectionView"
+                    Margin="10"
+                    ItemsSource="{Binding Options}"
+                    MaximumHeightRequest="300"
+                    VerticalOptions="FillAndExpand">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*,auto">
+                                <Label
+                                    Grid.Column="0"
+                                    FontFamily="ObjectivityExtraBold"
+                                    FontSize="20"
+                                    Text="{Binding .}"
+                                    TextColor="{StaticResource TextOnSecondary}"
+                                    VerticalTextAlignment="Center" />
+
+                                <Button
+                                    Grid.Column="1"
+                                    BackgroundColor="{StaticResource Secondary}"
+                                    Clicked="OnDeleteOptionButton_Clicked"
+                                    CornerRadius="15"
+                                    FontFamily="ObjectivityExtraBold"
+                                    Text="Delete"
+                                    TextColor="{StaticResource TextOnSecondary}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+            </VerticalStackLayout>
+
+        </Border>
+
+
+        <Button
+            x:Name="CreateSetButton"
+            Margin="10"
+            Background="{StaticResource Background}"
+            CornerRadius="15"
+            FontFamily="ObjectivityBold"
+            HorizontalOptions="Fill"
+            Clicked="CreateSetButton_Clicked"
+            Text="Create Set"
+            TextColor="{StaticResource TextOnSecondary}"
+            VerticalOptions="End" />
+    </VerticalStackLayout>
+</ContentView>
