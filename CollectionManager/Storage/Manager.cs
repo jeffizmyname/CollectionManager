@@ -19,6 +19,22 @@ namespace CollectionManager.Storage
             {
                 Directory.CreateDirectory(StoragePath);
             }
+            if (!Directory.Exists(Path.Combine(StoragePath, "Temp")))
+            {
+                Directory.CreateDirectory(Path.Combine(StoragePath, "Temp"));
+        }
+            if (!Directory.Exists(Path.Combine(StoragePath, "Images")))
+            {
+                Directory.CreateDirectory(Path.Combine(StoragePath, "Images"));
+            }
+            if (!Directory.Exists(Path.Combine(StoragePath, "Sets")))
+            {
+                Directory.CreateDirectory(Path.Combine(StoragePath, "Sets"));
+            }
+            if (!File.Exists(Path.Combine(StoragePath, "Sets", "Sets.txt")))
+            {
+                File.WriteAllTextAsync(Path.Combine(StoragePath, "Sets", "Sets.txt"), "");
+            }
         }
 
         public static void SaveItem(CollectionItem item)
