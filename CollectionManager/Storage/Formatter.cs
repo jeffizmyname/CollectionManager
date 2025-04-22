@@ -168,5 +168,52 @@ namespace CollectionManager.Storage
             });
             return parsedCollections;
         }
+
+        public static string SerializeSet(Set set)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[Set]\n");
+            sb.Append($"Id={set.Id}\n");
+            sb.Append($"Name={set.Name}\n");
+            sb.Append($"Values={string.Join(",", set.Values)}\n");
+            return sb.ToString();
+        }
+
+        public static List<Set> DeserializeSets(string data)
+        {
+            List<Set> parsedSets = new List<Set>();
+            List<string> sets = data.Split(new string[] { "[Set]" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            sets.ForEach( set => {
+                set = set.Replace("[Set]", "");
+                List<string> attributes = set.ReplaceLineEndings().Split("\r\n", StringSplitOptions.RemoveEmptyEntries).ToList();
+                Dictionary<string, string> attributesSplit = new Dictionary<string, string>();
+                for (int i = 0; i < attributes.Count; i++)
+                {
+                    int index = attributes[i].IndexOf("=");
+                    attributesSplit.Add(attributes[i].Substring(0, index), attributes[i].Substring(index + 1));
+                }
+                Set newSet = new Set("", new List<string>());
+                foreach (KeyValuePair<string, string> entry in attributesSplit)
+                {
+                    string key = entry.Key;
+                    string value = entry.Value;
+                    Debug.WriteLine($"{key}: {value}");
+                    switch (key)
+                    {
+                        case "Id":
+                            newSet.Id = int.Parse(value);
+                            break;
+                        case "Name":
+                            newSet.Name = value;
+                            break;
+                        case "Values":
+                            newSet.Values = value.Split(",").ToList();
+                            break;
+                    }
+                }
+                parsedSets.Add(newSet);
+            });
+            return parsedSets;
+        }
     }
 }
