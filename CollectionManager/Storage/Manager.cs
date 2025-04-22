@@ -1,9 +1,15 @@
 ﻿using CollectionManager.Models;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Storage;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static CollectionManager.Storage.Formatter;
 
@@ -12,6 +18,8 @@ namespace CollectionManager.Storage
     static class Manager
     {
         private static string StoragePath = Path.Combine(FileSystem.AppDataDirectory, "data");
+
+        public static string CurrentCollectionName { get; set; } = String.Empty;
         public static void InitializeStorage()
         {
             Debug.WriteLine("Storage path: " + $"{FileSystem.AppDataDirectory.ToString()}\\data");
@@ -22,7 +30,7 @@ namespace CollectionManager.Storage
             if (!Directory.Exists(Path.Combine(StoragePath, "Temp")))
             {
                 Directory.CreateDirectory(Path.Combine(StoragePath, "Temp"));
-        }
+            }
             if (!Directory.Exists(Path.Combine(StoragePath, "Images")))
             {
                 Directory.CreateDirectory(Path.Combine(StoragePath, "Images"));
