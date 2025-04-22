@@ -1,4 +1,5 @@
 ﻿using CollectionManager.Models;
+using CollectionManager.Storage;
 using System.Collections.ObjectModel;
 using static CollectionManager.Storage.Manager;
 
@@ -16,6 +17,7 @@ namespace CollectionManager.ViewModels
 
         public void AddCollection(Collection collection)
         {
+            collection.Id = Manager.GetMaxCollectionId() + 1;
             Collections.Add(collection);
             SaveCollection(collection);
         }
