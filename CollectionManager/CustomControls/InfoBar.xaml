@@ -15,6 +15,7 @@
                 TextColor="{StaticResource Text}" />
 
             <Label
+                x:Name="CollectionCountLabel"
                 Margin="25,25,0,0"
                 FontFamily="ObjectivityExtraBold"
                 FontSize="50"
@@ -23,6 +24,7 @@
                 TextColor="{StaticResource Text}" />
 
             <Label
+                x:Name="AllItemsCountLabel"
                 Margin="25,25,0,0"
                 FontFamily="ObjectivityExtraBold"
                 FontSize="50"
@@ -41,6 +43,7 @@
                 TextColor="{StaticResource Text}" />
 
             <Label
+                x:Name="ItemCountLabel"
                 Margin="25,25,0,0"
                 FontFamily="ObjectivityExtraBold"
                 FontSize="50"
@@ -49,12 +52,23 @@
                 TextColor="{StaticResource Text}" />
 
             <Label
+                x:Name="SoldItemsCountLabel"
                 Margin="25,25,0,0"
                 FontFamily="ObjectivityExtraBold"
                 FontSize="50"
                 HorizontalOptions="Start"
                 Text="idk: 1"
                 TextColor="{StaticResource Text}" />
+
+            <Label
+                x:Name="ForSaleItemsLabel"
+                Margin="25,25,0,0"
+                FontFamily="ObjectivityExtraBold"
+                FontSize="50"
+                HorizontalOptions="Start"
+                Text="Items: 1"
+                TextColor="{StaticResource Text}" />
+
         </VerticalStackLayout>
 
     </VerticalStackLayout>
