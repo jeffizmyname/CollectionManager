@@ -32,10 +32,10 @@ namespace CollectionManager.Storage
             return sb.ToString();
         }
 
-        public static string SerializeCollectionItems(Collection collection, string path)
+        public static string SerializeCollectionItems(List<CollectionItem> items, string path)
         {
             StringBuilder sb = new StringBuilder();
-            collection.Items.ForEach(item => {
+            items.ForEach(item => {
                 sb.AppendLine(SerializeCollectionItem(item));
             });
 
@@ -104,7 +104,7 @@ namespace CollectionManager.Storage
                             newItem.CollectionDate = DateTime.Parse(value);
                             break;
                         case "SellDate":
-                            newItem.SellDate = DateTime.Parse(value);
+                            newItem.SellDate = value == "" ? null : DateTime.Parse(value);
                             break;
                         case "Rating":
                             newItem.Rating = int.Parse(value);
