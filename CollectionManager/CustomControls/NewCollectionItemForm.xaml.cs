@@ -18,6 +18,9 @@ public partial class NewCollectionItemForm : ContentView
 
     Page App = Application.Current.MainPage;
 
+    public CollectionItem? EditingItem { get; private set; }
+    public bool IsEditMode => EditingItem != null;
+
     public SetViewModel _SetViewModel { get; set; }
     public NewCollectionItemForm()
 	{
@@ -32,57 +35,50 @@ public partial class NewCollectionItemForm : ContentView
     {
         if (await Validate())
         {
-            CollectionItem Item = new CollectionItem
-            {
-                Name = ItemNameEntry.Text,
-                Description = ItemDescriptionEntry.Text,
-                Price = float.Parse(ItemPriceEntry.Text),
-                CollectionDate = CollectionDatePicker.Date,
-                SellDate = SoldCheckBox.IsChecked ? SoldDatePicker.Date : null,
-                Rating = int.Parse(ItemRatingEntry.Text),
-                Sold = SoldCheckBox.IsChecked,
-                ToSale = ForSaleCheckBox.IsChecked,
-                ImageName = CopyImage(ImagePath),
-                CollectionName = CurrentCollectionName
-            };
+            var item = EditingItem ?? new CollectionItem();
 
-            CustomVariable customVariable = new CustomVariable();            
+            item.Name = ItemNameEntry.Text;
+            item.Description = ItemDescriptionEntry.Text;
+            item.Price = float.Parse(ItemPriceEntry.Text);
+            item.CollectionDate = CollectionDatePicker.Date;
+            item.SellDate = SoldCheckBox.IsChecked ? SoldDatePicker.Date : null;
+            item.Rating = int.Parse(ItemRatingEntry.Text);
+            item.Sold = SoldCheckBox.IsChecked;
+            item.ToSale = ForSaleCheckBox.IsChecked;
+            item.ImageName = IsEditMode ? item.ImageName : CopyImage(ImagePath);
+            item.CollectionName = CurrentCollectionName;
+
+            CustomVariable customVariable = new CustomVariable();
 
             if (TypePicker.SelectedIndex == 2)
             {
                 customVariable.Name = _SetViewModel.SelectedSet.Name;
                 customVariable.StringValue = SetValuePicker.SelectedItem.ToString();
-
-            } else
+            }
+            else
             {
                 customVariable.Name = CustomVariableNameEntry.Text;
                 if (int.TryParse(CustomVariableValueEntry.Text, out int intValue))
-                {
                     customVariable.IntValue = intValue;
-                }
                 else
-                {
                     customVariable.StringValue = CustomVariableValueEntry.Text;
-                }
             }
 
-            Item.customVariable = customVariable;
-            Debug.WriteLine($"Item: {Item.ToDisplayString()}");
+            item.customVariable = customVariable;
 
-            if(CollectionItem.HasDuplicate(Manager.LoadItems(Manager.CurrentCollectionName), Item))
+            if (!IsEditMode && CollectionItem.HasDuplicate(Manager.LoadItems(Manager.CurrentCollectionName), item))
             {
-                bool ans = await App.DisplayAlert("Validation Error", "This item might be duplicate do you want to add It?", "Yes", "No");
-                if (!ans)
-                {
-                    return;
-                }
+                bool ans = await App.DisplayAlert("Validation Error", "This item might be a duplicate. Add it anyway?", "Yes", "No");
+                if (!ans) return;
             }
 
-            CreateCollectionItemButtonClicked_Listener.Invoke(sender, Item);
+            //cos ze albo tworzy albo edycja  idk
+            CreateCollectionItemButtonClicked_Listener?.Invoke(sender, item);
+            ClearForm();
         }
     }
 
-	private async Task<bool> Validate()
+    private async Task<bool> Validate()
 	{
         if (App == null) return false;
 
@@ -147,12 +143,25 @@ public partial class NewCollectionItemForm : ContentView
                 return false;
             }
 
-            // Custom variable value 
+            // Custom variable value
             if (string.IsNullOrWhiteSpace(CustomVariableValueEntry.Text))
             {
                 await App.DisplayAlert("Validation Error", "Custom variable value is required.", "OK");
                 return false;
+            } else
+            {
+                if (TypePicker.SelectedIndex == 1) 
+                {
+
+                    if (!int.TryParse(CustomVariableValueEntry.Text, out int res))
+                    {
+                        await App.DisplayAlert("Validation Error", "Value must be an integer", "OK");
+                        return false;
+                    }
+                }
             }
+
+           
         }
 
         //require sell date
@@ -177,6 +186,44 @@ public partial class NewCollectionItemForm : ContentView
         }
 
         return true;
+    }
+
+    public void LoadItemForEditing(CollectionItem item)
+    {
+        EditingItem = item;
+
+        ItemNameEntry.Text = item.Name;
+        ItemDescriptionEntry.Text = item.Description;
+        ItemPriceEntry.Text = item.Price.ToString();
+        CollectionDatePicker.Date = item.CollectionDate;
+        SoldCheckBox.IsChecked = item.Sold;
+        SoldDatePicker.Date = item.SellDate ?? DateTime.Now;
+        ForSaleCheckBox.IsChecked = item.ToSale;
+        ItemRatingEntry.Text = item.Rating.ToString();
+        ImagePath = Manager.GetImagePath(item.ImageName);
+        ImageName = item.ImageName;
+
+        if (item.customVariable != null)
+        {
+            if (!string.IsNullOrWhiteSpace(item.customVariable.Name) &&
+                _SetViewModel.Sets.Any(s => s.Name == item.customVariable.Name))
+            {
+                TypePicker.SelectedIndex = 2; // "Set"
+                _SetViewModel.SelectedSet = _SetViewModel.Sets.First(s => s.Name == item.customVariable.Name);
+                SetValuePicker.SelectedItem = item.customVariable.StringValue;
+            }
+            else
+            {
+                TypePicker.SelectedIndex = 0; // "Custom"
+                CustomVariableNameEntry.Text = item.customVariable.Name;
+                if (item.customVariable.IntValue != null)
+                    CustomVariableValueEntry.Text = item.customVariable.IntValue.ToString();
+                else
+                    CustomVariableValueEntry.Text = item.customVariable.StringValue;
+            }
+        }
+
+        CreateCollectionButton.Text = "Save Item";
     }
 
     private void SoldCheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -255,5 +302,28 @@ public partial class NewCollectionItemForm : ContentView
                 }
             }
         }
+    }
+
+    public void ClearForm()
+    {
+        EditingItem = null;
+        ItemNameEntry.Text = string.Empty;
+        ItemDescriptionEntry.Text = string.Empty;
+        ItemPriceEntry.Text = string.Empty;
+        CollectionDatePicker.Date = DateTime.Today;
+        SoldCheckBox.IsChecked = false;
+        SoldDatePicker.Date = DateTime.Today;
+        ForSaleCheckBox.IsChecked = false;
+        ItemRatingEntry.Text = string.Empty;
+        ImagePath = string.Empty;
+        ImageName = string.Empty;
+        CustomVariableNameEntry.Text = string.Empty;
+        CustomVariableValueEntry.Text = string.Empty;
+        TypePicker.SelectedIndex = 0;
+    }
+
+    public void ChangeTitle(string title)
+    {
+        TitleLabel.Text = title;
     }
 }
