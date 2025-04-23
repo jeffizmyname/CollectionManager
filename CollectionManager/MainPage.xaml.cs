@@ -13,12 +13,36 @@ namespace CollectionManager
         public MainPage()
         {
             InitializeComponent();
-            CollectionListPage.newButtonClicked_Listener += (e, data) => Swap(data);
+            CollectionListPage.newButtonClicked_Listener += (e, data) =>
+            {
+                Swap(data);
+                FormItemPage.ClearForm();
+                FormItemPage.ChangeTitle("New Item");
+            };
+            CollectionListPage.editButtonCliked_Listener += (e, data) =>
+            {
+                Swap("CollectionItemList");
+                FormItemPage.ChangeTitle("Edit Item");
+                FormItemPage.LoadItemForEditing(data);
+            };
             CollectionListPage.pageChanged_Listener += (e, data) => Reset(data);
+
             FormCollectionPage.createCollectionButtonClicked_Listener += (s, data) => CollectionListPage._collectionViewModel.AddCollection(new Collection(data[0], data[1]));
             FormCollectionPage.createCollectionButtonClicked_Listener += (s, data) => InfoBarPage.UpdateCollectionInfo(CountCollections(), CountAllItems());
-            FormItemPage.CreateCollectionItemButtonClicked_Listener += (s, data) => CollectionListPage._collectionItemViewModel.AddItem(data);
+
+            FormItemPage.CreateCollectionItemButtonClicked_Listener += (s, data) =>
+            {
+                if (FormItemPage.IsEditMode)
+                {
+                    CollectionListPage._collectionItemViewModel.EditItem(data);
+                }
+                else
+                {
+                    CollectionListPage._collectionItemViewModel.AddItem(data);
+                }
+            };
             FormItemPage.CreateCollectionItemButtonClicked_Listener += (s, data) => InfoBarPage.UpdateItemsInfo(CountCurrentCollectionItems(), CountCurrentCollectionSoldItems(), CountCurrentCollectionForSaleItems());
+
             FormItemPage.OpenNewSetButtonClicked_Listener += (e, data) => Swap(data);
             FormSetPage.SetCreated += (s, data) => FormItemPage._SetViewModel.AddSet(data);
             InfoBarPage.UpdateCollectionInfo(CountCollections(), CountAllItems());
