@@ -75,6 +75,7 @@ public partial class NewCollectionItemForm : ContentView
             //cos ze albo tworzy albo edycja  idk
             CreateCollectionItemButtonClicked_Listener?.Invoke(sender, item);
             ClearForm();
+
         }
     }
 
