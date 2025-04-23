@@ -33,6 +33,8 @@ namespace CollectionManager.Helpers
             return "Empty Choice";
         }
 
+        public bool IsEmpty() => StringValue == null && IntValue == null && EnumValues == null;
+
         public string GetValue()
         {
             if (StringValue != null) return StringValue;
@@ -40,6 +42,8 @@ namespace CollectionManager.Helpers
             if (EnumValues != null) return string.Join(",", EnumValues);
             return "Empty Choice";
         }
+
+        public string GetValueString => StringValue ?? IntValue?.ToString() ?? string.Join(",", EnumValues) ?? "Empty Choice";
 
 
         public static CustomVariable Parse(string input)
