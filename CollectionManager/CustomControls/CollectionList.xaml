@@ -7,13 +7,26 @@
 
     <ContentView.Resources>
         <DataTemplate x:Key="CollectionTemplate">
-            <HorizontalStackLayout Padding="10">
-                <Label
-                    FontFamily="ObjectivityExtraBold"
-                    FontSize="25"
-                    Text="{Binding Name}"
-                    TextColor="{StaticResource Text}" />
-            </HorizontalStackLayout>
+            <StackLayout Padding="5, 1, 5, 0">
+                <Border
+                    Background="{StaticResource OnTeritiary}"
+                    StrokeShape="RoundRectangle 15"
+                    StrokeThickness="0"
+                    ZIndex="0">
+                    <VerticalStackLayout Padding="15">
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="45"
+                            Text="{Binding Name}"
+                            TextColor="{StaticResource Text}" />
+                        <Label
+                            FontFamily="ObjectivityExtraBold"
+                            FontSize="25"
+                            Text="{Binding Description}"
+                            TextColor="{StaticResource Text}" />
+                    </VerticalStackLayout>
+                </Border>
+            </StackLayout>
         </DataTemplate>
 
         <DataTemplate x:Key="CollectionItemTemplate">
@@ -256,10 +269,13 @@
                     Margin="5"
                     IsVisible="True"
                     ItemTemplate="{StaticResource CollectionTemplate}"
-                    ItemsLayout="VerticalList"
                     ItemsSource="{Binding Collections}"
                     SelectionChanged="CollectionListView_SelectionChanged"
-                    SelectionMode="Single" />
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
 
                 <!--  Items  -->
                 <CollectionView
@@ -291,53 +307,53 @@
                     <!--  Action  Button  -->
                     <Button
                         x:Name="EditButton"
-                        Margin="5, 10"
-                        Clicked="EditButton_Clicked"
+                        Margin="5,10"
                         Background="{StaticResource Background}"
+                        Clicked="EditButton_Clicked"
                         CornerRadius="15"
                         FontFamily="ObjectivityBold"
                         HorizontalOptions="End"
-                        Text="Edit Item"
                         IsVisible="False"
+                        Text="Edit Item"
                         TextColor="{StaticResource TextOnTeritiary}" />
 
                     <!--  Action  Button  -->
                     <Button
                         x:Name="ExportButton"
-                        Margin="5, 10"
-                        Clicked="ExportButton_Clicked"
+                        Margin="5,10"
                         Background="{StaticResource Background}"
+                        Clicked="ExportButton_Clicked"
                         CornerRadius="15"
                         FontFamily="ObjectivityBold"
                         HorizontalOptions="End"
-                        Text="Export Items"
                         IsVisible="False"
+                        Text="Export Items"
                         TextColor="{StaticResource TextOnTeritiary}" />
 
                     <!--  Action  Button  -->
                     <Button
                         x:Name="ImportButton"
-                        Margin="5, 10"
-                        Clicked="ImportButton_Clicked"
+                        Margin="5,10"
                         Background="{StaticResource Background}"
+                        Clicked="ImportButton_Clicked"
                         CornerRadius="15"
                         FontFamily="ObjectivityBold"
                         HorizontalOptions="End"
-                        Text="Import Items"
                         IsVisible="False"
+                        Text="Import Items"
                         TextColor="{StaticResource TextOnTeritiary}" />
 
                     <!--  Action  Button  -->
                     <Button
                         x:Name="AddNewButton"
-                        Margin="5, 10, 10, 10"
+                        Margin="5,10,10,10"
                         Background="{StaticResource Background}"
                         Clicked="AddNewButton_Clicked"
                         CornerRadius="15"
                         FontFamily="ObjectivityBold"
                         HorizontalOptions="End"
-                        Text="New Collection"
                         IsVisible="True"
+                        Text="New Collection"
                         TextColor="{StaticResource TextOnTeritiary}" />
                 </HorizontalStackLayout>
 
