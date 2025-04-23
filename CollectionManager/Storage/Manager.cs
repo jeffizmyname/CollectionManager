@@ -22,7 +22,10 @@ namespace CollectionManager.Storage
         public static string CurrentCollectionName { get; set; } = String.Empty;
         public static void InitializeStorage()
         {
-            Debug.WriteLine("Storage path: " + $"{FileSystem.AppDataDirectory.ToString()}\\data");
+            for (int i = 0; i < 10; i++)
+            {
+                Debug.WriteLine("Storage path: " + $"{FileSystem.AppDataDirectory.ToString()}\\data");
+            }
             if (!Directory.Exists(StoragePath))
             {
                 Directory.CreateDirectory(StoragePath);
@@ -295,6 +298,11 @@ namespace CollectionManager.Storage
         public static int GetMaxItemId(string collectionName)
         {
             return LoadItems(collectionName).Count == 0 ? 0 : LoadItems(collectionName).Max(e => e.Id);
+        }
+
+        public static string GetImagePath(string imageName)
+        {
+            return Path.Combine(StoragePath, "Images", imageName);
         }
     }
 }
