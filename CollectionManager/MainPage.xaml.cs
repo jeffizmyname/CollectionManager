@@ -35,16 +35,22 @@ namespace CollectionManager
                 if (FormItemPage.IsEditMode)
                 {
                     CollectionListPage._collectionItemViewModel.EditItem(data);
+                    CollectionListPage.Refresh();
                 }
                 else
                 {
                     CollectionListPage._collectionItemViewModel.AddItem(data);
                 }
+                Reset("CollectionItemList");
             };
             FormItemPage.CreateCollectionItemButtonClicked_Listener += (s, data) => InfoBarPage.UpdateItemsInfo(CountCurrentCollectionItems(), CountCurrentCollectionSoldItems(), CountCurrentCollectionForSaleItems());
 
             FormItemPage.OpenNewSetButtonClicked_Listener += (e, data) => Swap(data);
-            FormSetPage.SetCreated += (s, data) => FormItemPage._SetViewModel.AddSet(data);
+            FormSetPage.SetCreated += (s, data) =>
+            {
+                FormItemPage._SetViewModel.AddSet(data);
+                Swap("CollectionItemList");
+            };
             InfoBarPage.UpdateCollectionInfo(CountCollections(), CountAllItems());
         }
 
@@ -60,8 +66,6 @@ namespace CollectionManager
                     FormCollectionPage.IsVisible = false;
                     FormItemPage.IsVisible = false;
                     FormSetPage.IsVisible = false;
-
-
                 }
                 else if (data == "CollectionItemList")
                 {
@@ -113,7 +117,6 @@ namespace CollectionManager
                     FormItemPage.IsVisible = false;
                     FormSetPage.IsVisible = true;
                 }
-
 
                 await SidePanel.Content.TranslateTo(0, 0, 500);
                 return;
