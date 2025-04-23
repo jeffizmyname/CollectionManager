@@ -20,7 +20,8 @@
                     Margin="10"
                     Padding="0,0,0,10"
                     Background="{StaticResource Background}"
-                    HeightRequest="700"
+                    MinimumHeightRequest="680"
+                    MaximumHeightRequest="800"
                     StrokeShape="RoundRectangle 20, 20, 20, 20"
                     StrokeThickness="0">
 
