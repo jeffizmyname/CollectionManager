@@ -84,7 +84,7 @@ namespace CollectionManager.Storage
                     string key = entry.Key;
                     string value = entry.Value;
 
-                    Debug.WriteLine($"{key}: {value}");
+                    //Debug.WriteLine($"{key}: {value}");
 
                     switch (key)
                     {
