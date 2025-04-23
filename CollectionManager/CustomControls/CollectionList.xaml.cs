@@ -2,6 +2,7 @@ using CollectionManager.Models;
 using CollectionManager.ViewModels;
 using Microsoft.Maui.Controls.Handlers.Items;
 using CollectionManager.Storage;
+using System.Diagnostics;
 
 namespace CollectionManager.CustomControls;
 
@@ -9,6 +10,7 @@ public partial class CollectionList : ContentView
 {
     public event EventHandler<string>? newButtonClicked_Listener;
     public event EventHandler<string>? pageChanged_Listener;
+    public event EventHandler<CollectionItem>? editButtonCliked_Listener;
     public CollectionViewModel? _collectionViewModel { get; set; }
     public CollectionItemViewModel? _collectionItemViewModel { get; set; }
 
@@ -72,6 +74,7 @@ public partial class CollectionList : ContentView
             var selectedItem = e.CurrentSelection[0] as CollectionItem;
             if (selectedItem != null)
             {
+                Debug.WriteLine($"Clicked item");
                 var template = (DataTemplate)this.Resources["ItemPageTemplate"];
                 var content = (View)template.CreateContent();
                 content.BindingContext = selectedItem;
@@ -85,12 +88,14 @@ public partial class CollectionList : ContentView
                 CollectionItemsListView.IsVisible = false;
                 ExportButton.IsVisible = false;
                 ImportButton.IsVisible = false;
+                EditButton.IsVisible = true;
 
                 currentPage = "ItemDetailsPage";
                 pageChanged_Listener?.Invoke(e, currentPage);
             }
 
             ((CollectionView)sender).SelectedItem = null;
+            Debug.WriteLine($"sel item {((CollectionView)sender).SelectedItem}");
         }
     }
 
@@ -115,9 +120,14 @@ public partial class CollectionList : ContentView
             CollectionItemsListView.IsVisible = true;
             ExportButton.IsVisible = false;
             ImportButton.IsVisible = false;
+            EditButton.IsVisible = false;
+
+            Debug.WriteLine($"sel item {CollectionItemsListView.SelectedItem}");
+
 
             currentPage = "CollectionItemList";
             pageChanged_Listener?.Invoke(e, currentPage);
+            CollectionItemsListView.SelectedItem = null;
             return;
         }
 
@@ -136,7 +146,8 @@ public partial class CollectionList : ContentView
             CollectionItemsListView.IsVisible = false;
             ItemDetailsPage.IsVisible = false;
             ExportButton.IsVisible = false;
-            ImportButton.IsVisible = false;
+            ImportButton.IsVisible = false; 
+            EditButton.IsVisible = false;
 
             currentPage = "CollectionList";
             pageChanged_Listener?.Invoke(e, currentPage);
@@ -158,5 +169,10 @@ public partial class CollectionList : ContentView
     private void ExportButton_Clicked(object sender, EventArgs e)
     {
         Manager.ExportItems(Manager.CurrentCollectionName);
+    }
+
+    private void EditButton_Clicked(object sender, EventArgs e)
+    {
+        editButtonCliked_Listener.Invoke(sender, SelectedItem);
     }
 }
