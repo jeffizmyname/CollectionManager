@@ -95,13 +95,12 @@ public partial class CollectionList : ContentView
             }
 
             ((CollectionView)sender).SelectedItem = null;
-            Debug.WriteLine($"sel item {((CollectionView)sender).SelectedItem}");
         }
     }
 
     private void AddNewButton_Clicked(object sender, EventArgs e)
     {
-        if(currentPage == "ItemDetailsPage")
+        if (currentPage == "ItemDetailsPage")
         {
             _collectionItemViewModel.RemoveItem(SelectedItem);
             BackButton_Tapped(sender, null);
@@ -118,12 +117,12 @@ public partial class CollectionList : ContentView
 
             ItemDetailsPage.IsVisible = false;
             CollectionItemsListView.IsVisible = true;
-            ExportButton.IsVisible = false;
-            ImportButton.IsVisible = false;
+            ExportButton.IsVisible = true;
+            ImportButton.IsVisible = true;
             EditButton.IsVisible = false;
 
-            Debug.WriteLine($"sel item {CollectionItemsListView.SelectedItem}");
-
+            CollectionItemsListView.ItemsSource = null;
+            CollectionItemsListView.ItemsSource = _collectionItemViewModel.Items;
 
             currentPage = "CollectionItemList";
             pageChanged_Listener?.Invoke(e, currentPage);
@@ -146,7 +145,7 @@ public partial class CollectionList : ContentView
             CollectionItemsListView.IsVisible = false;
             ItemDetailsPage.IsVisible = false;
             ExportButton.IsVisible = false;
-            ImportButton.IsVisible = false; 
+            ImportButton.IsVisible = false;
             EditButton.IsVisible = false;
 
             currentPage = "CollectionList";
@@ -174,5 +173,17 @@ public partial class CollectionList : ContentView
     private void EditButton_Clicked(object sender, EventArgs e)
     {
         editButtonCliked_Listener.Invoke(sender, SelectedItem);
+    }
+
+    public void Refresh()
+    {
+        CollectionListView.ItemsSource = null;
+        CollectionListView.ItemsSource = _collectionViewModel.Collections;
+
+        ItemDetailsPage.Content = null;
+        var template = (DataTemplate)this.Resources["ItemPageTemplate"];
+        var content = (View)template.CreateContent();
+        content.BindingContext = SelectedItem;
+        ItemDetailsPage.Content = content;
     }
 }
